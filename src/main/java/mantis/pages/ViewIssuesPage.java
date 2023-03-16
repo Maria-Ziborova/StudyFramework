@@ -1,35 +1,29 @@
 package mantis.pages;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class PasswordPage {
+import java.util.List;
+
+public class ViewIssuesPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    @FindBy(id = "password")
-    private WebElement passwordField;
+    @FindBy(css = "#buglist tbody tr")
+    private List<WebElement> issues;
 
-    @FindBy(css = ".alert-danger p")
-    private WebElement errorMessage;
-
-    public PasswordPage(WebDriver driver) {
+    public ViewIssuesPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, 30, 500);
+        this.issues = issues;
 
         PageFactory.initElements(driver, this);
     }
 
-    public void login(String password) {
-        passwordField.sendKeys(password);
-        passwordField.sendKeys(Keys.ENTER);
-    }
-
-    public String getErrorMessage() {
-        return errorMessage.getText();
+    public int countIssues() {
+        return issues.size();
     }
 }

@@ -34,4 +34,20 @@ public class LoginTests extends BaseTest{
         Assertions.assertEquals("admin", currentUserName);
         Thread.sleep(1000);
     }
+
+    @Test
+    public void negativeLoginTest() throws InterruptedException {
+        mantisSite = new MantisSite(driver);
+        mantisSite.login("admin", "someblabla");
+        String actualErrorMessage = mantisSite.getPasswordPage().getErrorMessage();
+
+        if (actualErrorMessage.contains("Your")) {
+            Assertions.assertEquals("Your account may be disabled or blocked " +
+                    "or the username/password you entered is incorrect.", actualErrorMessage);
+        } else {
+            Assertions.assertEquals("Возможно, ваша учетная запись заблокирована, " +
+                    "или введенное регистрационное имя/пароль неправильны.", actualErrorMessage);
+        }
+        Thread.sleep(1000);
+    }
 }
