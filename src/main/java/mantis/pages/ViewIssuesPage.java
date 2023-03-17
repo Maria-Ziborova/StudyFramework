@@ -15,6 +15,7 @@ public class ViewIssuesPage {
     @FindBy(css = "#buglist tbody tr")
     private List<WebElement> issues;
 
+
     public ViewIssuesPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, 30, 500);
