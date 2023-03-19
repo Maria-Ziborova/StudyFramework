@@ -28,14 +28,13 @@ public class ReportIssuesPage {
     private WebElement deleteIssues;
 
     @FindBy(xpath = "(//*[@class='column-id'])[2]")
-    private WebElement newIssues;
+    private WebElement newIssue;
+
+    @FindBy(xpath = "(//*[@class='column-summary'])[2]")
+    private WebElement newIssueSummary;
 
     @FindBy(xpath = "//*[@class='widget-header widget-header-small']")
     private WebElement enterIssueDetails;
-
-
-    public boolean isEnterIssueDetailsDisplayed() {return enterIssueDetails.isDisplayed();}
-    public String issueDetailTitle() {return enterIssueDetails.getText();}
 
     public ReportIssuesPage(WebDriver driver) {
         this.driver = driver;
@@ -43,18 +42,24 @@ public class ReportIssuesPage {
 
         PageFactory.initElements(driver, this);
     }
+    public boolean isEnterIssueDetailsDisplayed() {return enterIssueDetails.isDisplayed();}
+
+    public String issueDetailTitle() {return enterIssueDetails.getText();}
+
+    public String newIssueSummaryName() {return newIssueSummary.getText();}
 
     public void reportIssue(){
         driver.get("https://academ-it.ru/mantisbt/bug_report_page.php");
 
-        summary.sendKeys("summary");
+        summary.sendKeys("summary1903");
         description.sendKeys("description");
         submitIssue.click();
     }
-    public void deleteIssue() throws InterruptedException {
+
+    public void deleteLastCreatedIssue() throws InterruptedException {
         driver.get("https://academ-it.ru/mantisbt/view_all_bug_page.php");
 
-        newIssues.click();
+        newIssue.click();
         Thread.sleep(3000);
         delete.click();
         Thread.sleep(3000);
